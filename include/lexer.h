@@ -1,11 +1,7 @@
 #ifndef LEXER_H
-
 #define LEXER_H
 
-// #include <stdlib.h>
-#include <cstdlib>
-#include <string>
-#include <vector>
+#include "global.h"
 
 enum Token
 {
