@@ -3,7 +3,7 @@
 
 #include <cstdio>
 
-inline void log_error(const char *str)
+inline void logError(const char *str)
 {
   fprintf(stderr, "Log error: %s\n", str);
 }

@@ -1,10 +1,6 @@
 #include "lexer.h"
 
-
-static std::string identifierStr = "";
-static double numVal;
-
-static int gettok()
+int Lexer::gettok()
 {
   static int lastChar = ' ';
 
@@ -57,5 +53,4 @@ static int gettok()
   int thisChar = lastChar;
   lastChar = getchar();
   return thisChar;
-
 }

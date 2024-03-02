@@ -14,5 +14,19 @@ enum Token
   tok_number = -5,
 };
 
+class Lexer {
+protected:
+  std::string identifierStr;
+  double numVal;
+
+public:
+  Lexer() {};
+  ~Lexer() {};
+  int gettok();
+  double getNumVal() { return numVal; }
+  std::string getIdentifierStr() {return identifierStr; }
+};
+
+
 
 #endif
