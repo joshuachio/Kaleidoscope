@@ -2,17 +2,25 @@
 
 int Lexer::gettok()
 {
-  static int lastChar = ' ';
+  // int lastChar = ' ';
 
   while (isspace(lastChar))
     lastChar = getchar();
 
   if (isalpha(lastChar))
   {
-    identifierStr += lastChar;
-    while (isalnum(lastChar == getchar()))
+    identifierStr = "";
+    while (isalnum(lastChar))
+    {
+      // printf("CHAR: %c\n", lastChar);
       identifierStr += lastChar;
-
+      lastChar = getchar();
+    }
+    // while (isalnum(lastChar = getchar()))
+    // {
+    //   identifierStr += lastChar;
+    // }
+    // printf("TEST: %s\n", identifierStr.c_str());
     if (identifierStr == "def")
       return tok_def;
     if (identifierStr == "extern")
@@ -41,7 +49,7 @@ int Lexer::gettok()
       lastChar = getchar();
     } while (lastChar != EOF && lastChar != '\n' && lastChar != '\r');
 
-    if (lastChar == EOF)
+    if (lastChar != EOF)
     {
       return gettok();
     }

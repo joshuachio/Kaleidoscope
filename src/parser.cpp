@@ -20,8 +20,10 @@ std::unique_ptr<ExprAST> Parser::parseParenExpr()
     return nullptr;
   
   if (curTok != ')')
+  {
     logError("expected ')'");
     return nullptr;
+  }
 
   getNextToken();
   return x;
@@ -29,7 +31,7 @@ std::unique_ptr<ExprAST> Parser::parseParenExpr()
 
 std::unique_ptr<ExprAST> Parser::parseIdentifierExpr()
 {
-  std::string idName = lexer->getIdentifierStr();
+  std::string idName = lexer->getIdentifierStr().c_str();
   getNextToken();
 
   if (curTok != '(')
@@ -50,8 +52,10 @@ std::unique_ptr<ExprAST> Parser::parseIdentifierExpr()
         break;
 
       if (curTok != ',')
+      {
         logError("Expected ')' or ',' in argument list");
         return nullptr;
+      }
 
       getNextToken();
     }
@@ -127,23 +131,31 @@ std::unique_ptr<ExprAST> Parser::parseBinOpRHS(int exprPrec, std::unique_ptr<Exp
 
 std::unique_ptr<PrototypeAST> Parser::parsePrototype()
 {
+  // printf("PROTO CURTOK: %d\n", curTok); // DELETE
   if (curTok != tok_identifier)
+  {
     logError("Expected function name in prototype");
     return nullptr;
+  }
 
-  std::string functionName = lexer->getIdentifierStr();
+  std::string functionName = lexer->getIdentifierStr().c_str();
+  // printf("FUNCTION NAME: %s\n", functionName.c_str()); // DELETE
   getNextToken();
-
+  // printf("CURTOK: %d\n", curTok); // DELETE
   if (curTok != '(')
+  {
     logError("Expected '(' in prototype");
     return nullptr;
+  }
   
   std::vector<std::string> params;
   while (getNextToken() == tok_identifier)
-    params.push_back(lexer->getIdentifierStr());
+    params.push_back(lexer->getIdentifierStr().c_str());
   if (curTok != ')')
+  {
     logError("Expected ')' in prototype");
     return nullptr;
+  }
   
   getNextToken();
   return std::make_unique<PrototypeAST>(functionName, std::move(params));
@@ -152,6 +164,8 @@ std::unique_ptr<PrototypeAST> Parser::parsePrototype()
 std::unique_ptr<FunctionAST> Parser::parseDefinition()
 {
   getNextToken();
+  // printf("HERE\n"); // DELETE
+  // printf("CURTOK: %d\n", curTok); // DELETE
   auto proto = parsePrototype();
   if (!proto)
     return nullptr;
@@ -179,6 +193,7 @@ std::unique_ptr<FunctionAST> Parser::parseTopLevelExpr()
 
 void Parser::handleDefinition()
 {
+  // printf("DEFINITION\n"); // DELETE
   if (parseDefinition())
     fprintf(stderr, "Parsed a function definition.\n");
   else
@@ -203,6 +218,9 @@ void Parser::handleTopLevelExpression()
 
 void Parser::parse()
 {
+  fprintf(stderr, "ready> ");
+  getNextToken();
+  // printf("CURTOK: %d\n", curTok); // DELETE
   while (1)
   {
     fprintf(stderr, "ready> ");

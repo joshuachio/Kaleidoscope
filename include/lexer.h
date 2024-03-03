@@ -18,6 +18,7 @@ class Lexer {
 protected:
   std::string identifierStr;
   double numVal;
+  char lastChar = ' ';
 
 public:
   Lexer() {};
