@@ -10,6 +10,11 @@ private:
 public:
   NumberExprAST(double val) : val(val) {};
 
+  void accept(ASTVisitor &visitor) override
+  {
+    visitor.visit(*this);
+  }
+
 };
 
 

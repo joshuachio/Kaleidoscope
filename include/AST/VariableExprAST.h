@@ -10,6 +10,11 @@ class VariableExprAST : public ExprAST {
 public:
   VariableExprAST(const std::string &name) : name(name) {};
 
+  void accept(ASTVisitor &visitor) override
+  {
+    visitor.visit(*this);
+  }
+
 };
 
 #endif
